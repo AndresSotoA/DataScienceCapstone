@@ -1,29 +1,20 @@
-tokenize<- function(fname)
+# read lines from file
+obtainLines <- function(fname)
 {
     fid<- file(fname,"r")
-    
-    tokenList<- vector()
-    pSample<- 0.1  # sampling probability 
-    # read into rawdata
-    ct<- 0
-    while (length(oneLine <- readLines(fid, n = 1, warn = FALSE)) > 0) 
-    {
-        # sampling switch
-        sampleYes<- rbinom(1,1,pSample)
-        
-        if (sampleYes==0) 
-            next
-        
-        # process line    
-        oneVec <- (strsplit(oneLine, " "))
-        tokenList <- c(tokenList,unlist(oneVec))
-        
-        ct<- ct+1
-        if(ct> 20)
-            break
-    } 
+    lines<- readLines(fid,warn=FALSE)
     close(fid)
     
+    # return
+    lines
+}
+
+# cleaning words vector
+# 
+# tokenList: words vector
+# return cleaned tokenList
+tokenTreatment<- function(tokenList)
+{
     # remove non-alphabetic ending 
     tokenList<- gsub("[^[:alpha:]]+$","",tokenList)
     # remove non-alphanumeric beginning 
@@ -39,3 +30,62 @@ tokenize<- function(fname)
     # return
     tokenList
 }
+
+# tokenize one line 
+#
+# oneLine: one line of words
+tokenizeOneLine<- function(oneLine)
+{
+    wordList<- strsplit(oneLine," ")
+    wordList<- tokenTreatment(unlist(wordList))
+    # return
+    wordList
+}
+
+# tokenize lines
+tokenizeFromLines<- function(lines)
+{
+    tokenList<- vector()
+    for (oneLine in lines)
+    {
+        lst<- tokenizeOneLine(oneLine)
+        tokenList<- c(tokenList,lst)
+    }
+    # return
+    tokenList
+}
+
+# tokenize from reading a file
+tokenizeFromFile<- function(fname)
+{
+    fid<- file(fname,"r")
+    
+    tokenList<- vector()
+    pSample<- 0.1  # sampling probability 
+    # read into rawdata
+    ct<- 0
+    while (length(oneLine <- readLines(fid, n = 1, warn = FALSE)) > 0) 
+    {
+        # sampling switch
+        sampleYes<- 1 #rbinom(1,1,pSample)
+        
+        if (sampleYes==0) 
+            next
+        
+        # process line    
+        oneVec <- (strsplit(oneLine, " "))
+        tokenList <- c(tokenList,unlist(oneVec))
+        
+        ct<- ct+1
+        if(ct> 20)
+            break
+    } 
+    close(fid)
+    
+    # cleaning token
+    tokenList<- tokenTreatment(tokenList)
+    
+    # return
+    tokenList
+}
+
