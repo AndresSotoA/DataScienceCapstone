@@ -22,7 +22,8 @@ tokenTreatment<- function(tokenList)
     
     # remove empty items
     ind<- grep("^$",tokenList)
-    tokenList<- tokenList[-ind]
+    if (length(ind)!=0)
+        tokenList<- tokenList[-ind]
     
     # change to lower case
     tokenList<- tolower(tokenList)
@@ -38,6 +39,8 @@ tokenizeOneLine<- function(oneLine)
 {
     wordList<- strsplit(oneLine," ")
     wordList<- tokenTreatment(unlist(wordList))
+    # add line start and line end
+    wordList<- c("<s>",wordList,"</s>")
     # return
     wordList
 }
@@ -63,7 +66,6 @@ tokenizeFromFile<- function(fname)
     tokenList<- vector()
     pSample<- 0.1  # sampling probability 
     # read into rawdata
-    ct<- 0
     while (length(oneLine <- readLines(fid, n = 1, warn = FALSE)) > 0) 
     {
         # sampling switch
@@ -73,17 +75,11 @@ tokenizeFromFile<- function(fname)
             next
         
         # process line    
-        oneVec <- (strsplit(oneLine, " "))
-        tokenList <- c(tokenList,unlist(oneVec))
-        
-        ct<- ct+1
-        if(ct> 20)
-            break
+        oneLineToken<- tokenizeOneLine(oneLine)
+        tokenList <- c(tokenList,oneLineToken)
     } 
     close(fid)
     
-    # cleaning token
-    tokenList<- tokenTreatment(tokenList)
     
     # return
     tokenList
