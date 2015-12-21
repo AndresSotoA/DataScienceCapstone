@@ -24,9 +24,9 @@ obtainLinesFast<- function(fname)
 tokenTreatment<- function(tokenList)
 {
     # remove non-alphabetic ending 
-    tokenList<- gsub("[^[:alpha:]]+$","",tokenList)
+    tokenList<- gsub("[^[:alpha:]]+$","",tokenList, fixed = TRUE, useBytes = TRUE)
     # remove non-alphanumeric beginning 
-    tokenList<- gsub("^[^[:alnum:]]","",tokenList)
+    tokenList<- gsub("^[^[:alnum:]]","",tokenList, fixed = TRUE, useBytes = TRUE)
     
     # remove empty items
     ind<- grep("^$",tokenList)
