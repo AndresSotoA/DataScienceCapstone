@@ -9,6 +9,14 @@ obtainLines <- function(fname)
     lines
 }
 
+# read lines using readChar
+obtainLinesFast<- function(fname) 
+{
+  s = file.info( fname )$size 
+  buf = readChar( fname, s, useBytes=T)
+  strsplit( buf,"\r\n",fixed=T,useBytes=T)[[1]]
+}
+
 # cleaning words vector
 # 
 # tokenList: words vector
