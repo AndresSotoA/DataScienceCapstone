@@ -24,5 +24,16 @@ ng2_news<- buildNGramVector(tkn_news,n=2)
 
 # build 2 gram counts
 library(tau)
+ng1C_blogs<- textcnt(tkn_blogs, method="string", n=1)
+ng2C_blogs<- textcnt(tkn_blogs, method="string", n=2)
 
-ng2C_blogs<- textcnt(tkn_blogs, methods="string", n=2)
+# get unique words in ngram
+ut1_blogs<- unique(tkn_blogs)
+ut2_blogs<- unique(ng2_blogs)
+
+# calculate frequency
+ng1C_blogs<- sort(ng1C_blogs, decreasing = TRUE)
+cover1<- sum(ng1C_blogs[1:10000])/length(tkn_blogs)
+
+ng2C_blogs<- sort(ng2C_blogs, decreasing = TRUE)
+cover2<- sum(ng2C_blogs[1:10000])/length(ng2_blogs)
