@@ -39,8 +39,10 @@ tkn_blogs<- obtainWordsFast(fn_blogs)
 tkn_twitter<- obtainWordsFast(fn_twitter)
 tkn_news<- obtainWordsFast(fn_news)
 
-# build 1 gram hash
-h1_blogs<- build1GramHash(tkn_blogs)
+# build 2 gram vector
+ng2_blogs<- buildNGramVector(tkn_blogs,n=2)
+ng2_twitter<- buildNGramVector(tkn_twitter,n=2)
+ng2_news<- buildNGramVector(tkn_news,n=2)
 
 
 

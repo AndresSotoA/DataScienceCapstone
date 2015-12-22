@@ -10,6 +10,13 @@ obtainLines <- function(fname)
 }
 
 # read lines using readChar
+obtainBuffFast<- function(fname) 
+{
+    s = file.info( fname )$size 
+    buf = readChar( fname, s, useBytes=T)
+}
+
+# read lines using readChar
 obtainLinesFast<- function(fname) 
 {
   s = file.info( fname )$size 
