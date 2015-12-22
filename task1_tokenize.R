@@ -17,6 +17,17 @@ obtainLinesFast<- function(fname)
   strsplit( buf,"\r\n",fixed=T,useBytes=T)[[1]]
 }
 
+# get word vector
+obtainWordsFast<- function(fname) 
+{
+    s = file.info( fname )$size 
+    buf = readChar( fname, s, useBytes=T)
+    buf1<- gsub("[[:punct:][:space:]\r\n]+"," ",buf)
+    
+    words<- strsplit(buf1," ",fixed= T, useBytes=T)[[1]]
+}
+
+
 # cleaning words vector
 # 
 # tokenList: words vector

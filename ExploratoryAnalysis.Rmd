@@ -30,15 +30,17 @@ fn_twitter<- "./final/en_US/en_US.twitter.txt"
 fn_news<- "./final/en_US/en_US.news.txt"
 
 # read lines
-lines_blogs<- obtainLines(fn_blogs)
-lines_twitter<- obtainLines(fn_twitter)
-lines_news<- obtainLines(fn_news)
+lines_blogs<- obtainLinesFast(fn_blogs)
+lines_twitter<- obtainLinesFast(fn_twitter)
+lines_news<- obtainLinesFast(fn_news)
 
 # tokenize from lines
-tkn_blogs<- tokenizeFromLines(lines_blogs)
-tkn_twitter<- tokenizeFromLines(lines_twitter)
-tkn_news<- tokenizeFromLines(lines_news)
+tkn_blogs<- obtainWordsFast(fn_blogs)
+tkn_twitter<- obtainWordsFast(fn_twitter)
+tkn_news<- obtainWordsFast(fn_news)
 
+# build 1 gram hash
+h1_blogs<- build1GramHash(tkn_blogs)
 
 
 
