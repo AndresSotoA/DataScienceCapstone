@@ -66,48 +66,22 @@ buildNGramVector <- function(tokens, n = 2, concatenator = "_", include.all = FA
 }
 
 
-
-saveNGramCountHash<- function(words,fname)
+# randomly select lines
+randomSelectLines<- function(lines, nSample=1e3)
 {
-    nw<- length(words)
-    istart<- 1
-    chunk<- 1e5
-    
-    ct<-1
-    while (1)
-    {
-        iend<- min(istart+chunk, nw)
-        
-        print(sprintf("processing words %d to %d now...\n",istart, iend))
-        
-        # build hash table
-        ht<- buildNGramCountHash(words[istart:iend])
-        
-        hk<- keys(ht)
-        hv<- values(ht)
-        
-        # wirte to file
-        fnow<- sprintf("%s_%d.txt",fname,ct)
-        fid<- file(fnow,"w")
-        for (i in seq(length(hk)))
-        {
-            writeLines(paste(hk[i],hv[i]), fid);
-        }
-        close(fid)
-        
-        # update index
-        istart<- iend + 1
-        ct<- ct + 1
-        
-        # termination condition
-        if (iend>= nw)
-            break
-    }
+    nL<- length(lines)
+    ivec<- round(runif(nSample,min=1,max=nL))
+    lines[ivec]
 }
 
-# need to work on this
-retrieveNGramCountHash<- function(fname)
+randomSelectLines1<- function(lines, nSample=1e3)
 {
+    nL<- length(lines)
+    delta<- round(nL/nSample)
+    
+    istart<- runif(1,min=1,max= delta)
+    
+    ivec<- seq.int(istart,nL,length.out = nSample)
+    lines[ivec]
     
 }
-
