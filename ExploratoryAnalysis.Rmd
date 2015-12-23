@@ -10,40 +10,42 @@ The purpose of this Cousera Capsotne project is to apply Natural Language Progra
 
 This milestone report will first demonstrates the findings in the initial exploratory data analysis. Then the goals and strategies of building the prediction model will be proposed. 
 
-## Data Cleaning
+## Data Reading
 
 The data was obtained from the Coursera site: [https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip](https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip)
 
-Read data (Since the size of the data files is too large, the files were saved and access locally.)
-
-* need to provide R file listing
-* only english data were processed
+Some utility functions was constructed in  **UtilityFunctions.R** to read the data. In the study, only the English library was used. Therefore, the text data in **en_US.blogs.txt**, **en_US.twitter.txt**, and **en_US.news.txt** were read into memory. :
 
 ``` {r readData, cache= TRUE}
 # load utility functions
-source("task1_tokenize.R")
-source("task2_exploratory.R")
+source("UtilityFunctions.R")
 
 # assign data file names
 fn_blogs<- "./final/en_US/en_US.blogs.txt"
 fn_twitter<- "./final/en_US/en_US.twitter.txt"
 fn_news<- "./final/en_US/en_US.news.txt"
 
-# read lines
+# read lines vector
 lines_blogs<- obtainLinesFast(fn_blogs)
 lines_twitter<- obtainLinesFast(fn_twitter)
 lines_news<- obtainLinesFast(fn_news)
 
-# tokenize from lines
-tkn_blogs<- obtainWordsFast(fn_blogs)
-tkn_twitter<- obtainWordsFast(fn_twitter)
-tkn_news<- obtainWordsFast(fn_news)
-
-# build 2 gram vector
-ng2_blogs<- buildNGramVector(tkn_blogs,n=2)
-ng2_twitter<- buildNGramVector(tkn_twitter,n=2)
-ng2_news<- buildNGramVector(tkn_news,n=2)
-
-
+# read words vector
+words_blogs<- obtainWordsFast(fn_blogs)
+words_twitter<- obtainWordsFast(fn_twitter)
+words_news<- obtainWordsFast(fn_news)
 
 ```
+
+The lines and words counts are summarized in the following table:
+
+File Name         |   Number of Lines          |    Number of Words  
+------------------|----------------------------|-------------------------
+en_US.blogs.txt   |  `r length(lines_blogs)`   | `r length(words_blogs)`
+en_US.twitter.txt |  `r length(lines_twitter)` | `r length(words_twitter)`   
+en_US.news.txt    |  `r length(lines_news)`    | `r length(words_news)` 
+
+
+## Sampling Scheme
+
+As can be seen in the previous section, the amount of data is huge and can not be efficiently processed by general PC and mobile device. Sampling the data is necessary. 
