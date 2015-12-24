@@ -54,7 +54,7 @@ As can be seen in the previous section, the amount of data is huge and can not b
 2. frequent word count: number of words that has a greater than 1e-3 probability
 3. 90% coverage word count ratio: how many unique words (in terms of percentage of sampled vocabulary) are needed in a frequency sorted dictionary to cover 90% of all word instances in the language? 
 
-In the following calculation, the sample size (number of sentences) was gradually increased from 1e2 to 1e5 sentences. Item 1-3 mentioned above were computed for each of the sample size. To simplify the process, only one file, **en_US.blogs.txt**, was used in this analysis. Library **tau** were used here for calculating the word frequency.  
+In the following calculation, sentences were randomly selected out of the data file. The sample size (number of sentences) was gradually increased from 1e2 to 1e5 sentences. Item 1-3 mentioned above were computed for each of the sample size. To simplify the process, only one file, **en_US.blogs.txt**, was used in this analysis. The Library **tau** was used here for calculating the word frequency.  
 
 ``` {r sampling, cache= TRUE}
 library(tau)
@@ -66,16 +66,23 @@ nVoc<- length(voc_blogs) # vocabulary size
 # compute sample vocaburary
 nSamplePool<- seq(1e2,1e5,length.out = 10)
 
+set.seed(314)
 vocRatio<- vector()
 freqWordCnt<- vector()
 Coverage90_vocRatio<- vector()
 for (nSampleLines in nSamplePool)
 {
+    # randomly select samples
     lnow<- randomSelectLines(lines_blogs,n = nSampleLines)
+    # compute word counts
     ng1<- textcnt(lnow, method= "string",n=1)
+    # compute size of sample vocabulary (unique words)
     nSampleVoc<- length(ng1)
     
+    # sort by frequency
     ng1s<- sort(ng1, decreasing = TRUE)
+    
+    # obtain 90% coverage vocabulary ratio
     cnt<- 1
     while (TRUE)
     {
@@ -94,7 +101,7 @@ for (nSampleLines in nSamplePool)
     
     # frequent word counts
     freq<- ng1/sum(ng1)
-    freqWordCnt<- c(freqWordCnt, length(ng1[freq>1e-3]))
+    freqWordCnt<- c(freqWordCnt, length(ng1[freq>1e-4]))
 }
 
 ```
@@ -121,4 +128,6 @@ g
 
 The bottom figure shows the percentage of words within vocabulary that cover 90% of all word instances. As can be seen, this percentage decreased as the sample size grew and started to remained stable at around 5% level. That means it required **only 5%** of the most frequent words in the vocabulary to represent **90%** of the word instances in the dataset.
 
-The top figure shows the sampled vocabulary to total vocabulary ratio. As shown in the figure, this ratio increased with increasing sample size, and a sample size of 1e5 sentences already covers 30% of the total vocabulary. 
+The top figure shows the sampled vocabulary to total vocabulary ratio. As shown in the figure, this ratio increased with increasing sample size, and a sample size of **1e5** sentences already covers **30%** of the total vocabulary. 
+
+The middle figure shows that, except for small sample size, the number of most frequent words remain similar with increasing sample size. That indicates it does not require a large sample size to capture most frequent words.
