@@ -87,3 +87,13 @@ VocabularyCoverage<- function(ngram, coverage= 90)
     # return 
     CoverageVocRatio
 }
+
+## add sentence start and end symbol
+addSentenceSymbol<- function(lines)
+{
+    lout<- gsub("([.]{1}[[:space:]]+)([[:upper:]]{1})"," </s> <s> \\2"
+         ,lines)
+    # return 
+    lout
+}
+                             
