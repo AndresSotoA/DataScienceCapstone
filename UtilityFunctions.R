@@ -91,8 +91,9 @@ VocabularyCoverage<- function(ngram, coverage= 90)
 ## add sentence start and end symbol
 # n is for n-gram
 # if n=1, no pre and postfix
-# if n=2, prefix is <s>
-# if n=3, prefix is <s> <s>
+# if n=2, prefix is sstrt
+# if n=3, prefix is sstrt sstrt
+# postfix is strmnt
 addSentenceSymbol<- function(lines, n=1)
 {
 
@@ -100,18 +101,21 @@ addSentenceSymbol<- function(lines, n=1)
     pre<-""
     while ((ct)>0)
     {
-        pre<- paste(pre,"<s>")
+        pre<- paste(pre,"sstrt")
         ct<- ct-1
     }
     
-    # add symbol at beginning and end
+    
+    # remove punctuation first
     lout<- lines
+    
+    # add symbol at beginning and end
     if (n>1)
     {
-        lines<- paste(pre,lines,"</s>")
+        lout<- paste(pre,lout,"strmnt")
         lout<- gsub("([.]{1}[[:space:]]+)([[:upper:]]{1})"
-                ,paste(" </s>",pre,"\\2")
-                ,lines)
+                ,paste(" strmnt",pre,"\\2")
+                ,lout)
     }
     # return 
     lout

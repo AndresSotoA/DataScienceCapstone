@@ -59,12 +59,22 @@ ls_test<- c(ls_blogs,ls_twitter,ls_news)
 # =========== build n-gram ===========
 library(tau)
 
-# 1-gram
-ng1 <- textcnt(ls_train, method= "string", n=1, useBytes = TRUE)
-ng2 <- textcnt(ls_train, method= "string", n=2, useBytes = TRUE) 
-ng3 <- textcnt(ls_train, method= "string", n=2, useBytes = TRUE)
-ng4 <- textcnt(ls_train, method= "string", n=2, useBytes = TRUE)
-ng5 <- textcnt(ls_train, method= "string", n=2, useBytes = TRUE)
+# pretreat the lines
+ltmp1<- addSentenceSymbol(ls_train, n=1)
+ltmp2<- addSentenceSymbol(ls_train, n=2)
+ltmp3<- addSentenceSymbol(ls_train, n=3)
+ltmp4<- addSentenceSymbol(ls_train, n=4)
+ltmp5<- addSentenceSymbol(ls_train, n=5)
+
+# count ngram
+ng1<- textcnt(ltmp1, method= "string", n= 1, useBytes = TRUE)
+ng2<- textcnt(ltmp2, method= "string", n= 2, useBytes = TRUE)
+ng3<- textcnt(ltmp3, method= "string", n= 3, useBytes = TRUE)
+ng4<- textcnt(ltmp4, method= "string", n= 4, useBytes = TRUE)
+ng5<- textcnt(ltmp5, method= "string", n= 5, useBytes = TRUE)
+
+
+
 
 # ======== save data to files ==========
 save(ls_train, ls_cvn, ls_test,
