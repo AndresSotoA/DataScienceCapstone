@@ -12,7 +12,7 @@ predict2<- function(ng2,sentence)
     wlast<- paste(ws[(nWords-n+2):nWords], collapse=" ")
     
     # find index that starts with wlast
-    expr<- paste0("^",wlast)
+    expr<- paste0("^",wlast," ")
     ind<- grep(expr,names(ng2))
     
     # find most count item
@@ -38,7 +38,7 @@ predict3<- function(ng3,sentence)
     wlast<- paste(ws[(nWords-n+2):nWords], collapse=" ")
     
     # find index that starts with wlast
-    expr<- paste0("^",wlast)
+    expr<- paste0("^",wlast," ")
     ind<- grep(expr,names(ng3))
     
     # find most count item
