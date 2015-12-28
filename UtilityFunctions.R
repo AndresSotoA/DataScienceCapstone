@@ -120,4 +120,10 @@ addSentenceSymbol<- function(lines, n=1)
     # return 
     lout
 }
-                             
+     
+
+removeLastWord<- function(sentence)
+{
+    ws<- strsplit(sentence, split=" ", useBytes = TRUE)[[1]]
+    paste(ws[1:(length(ws)-1)], collapse = " ")
+}                        

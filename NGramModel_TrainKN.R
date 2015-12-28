@@ -1,7 +1,12 @@
+# Train with Kneser-Ney interpolation method
+
 #============= load data =============
 load("sampledData.RData")
 
 source("UtilityFunctions.R")
+
+# ======= set up parameters =========
+d<- 0.75
 
 
 #======== train 2 gram model ========
@@ -12,6 +17,11 @@ ng2name_minus<- sapply(names(ng2),removeLastWord)
 ind<- match(ng2name_minus, names(ng1))
 # get previous ng1 count
 ng2_minus<- ng1[ind]
+
+# compute lambda
+lambda<- 0.1/ng2
+
+
 
 # compute log probablity
 V<- length(ng1)
