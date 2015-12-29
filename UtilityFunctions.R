@@ -127,3 +127,35 @@ removeLastWord<- function(sentence)
     ws<- strsplit(sentence, split=" ", useBytes = TRUE)[[1]]
     paste(ws[1:(length(ws)-1)], collapse = " ")
 }                        
+
+# build n-word vector
+build2Words<- function(ws)
+{
+    # number of words
+    nw<- length(ws)
+    wsa<- ws[1:(nw-1)]
+    wsb<- ws[2:nw]
+    # return
+    paste(wsa,wsb)
+}
+build3Words<- function(ws)
+{
+    # number of words
+    nw<- length(ws)
+    wsa<- ws[1:(nw-2)]
+    wsb<- ws[2:(nw-1)]
+    wsc<- ws[3:nw]
+    # return
+    paste(wsa,wsb,wsc)
+}
+build4Words<- function(ws)
+{
+    # number of words
+    nw<- length(ws)
+    wsa<- ws[1:(nw-3)]
+    wsb<- ws[2:(nw-2)]
+    wsc<- ws[3:(nw-1)]
+    wsd<- ws[4:nw]
+    # return
+    paste(wsa,wsb,wsc,wsd)
+}
