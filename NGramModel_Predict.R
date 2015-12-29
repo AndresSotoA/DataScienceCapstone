@@ -21,7 +21,7 @@ computePKN<- function(i, ng4, c_m, lamb)
 
 
 # =========== Predict KN 4 gram ==========
-predictKN <- function (ng2,ng3,ng4,sentence)
+predictKN <- function (ng1,ng2,ng3,ng4,sentence)
 {
     # get words from sentence
     s1<- tolower(sentence)
@@ -32,36 +32,61 @@ predictKN <- function (ng2,ng3,ng4,sentence)
     
     # extract last three words
     n<- 4
-    wlast<- paste(ws[(nWords-n+2):nWords], collapse=" ")
+    wPrev<- paste(ws[(nWords-n+2):nWords], collapse=" ")
     
-    # get all possible 4-words
-    str1<- paste0("^",wlast)
-    ind4<- grep(str1, names(ng4))
+    # last word candidate
+    wLast<- as.character(ng1$name[1:50])
     
-    # set w:c(wi-1,w)>0
-    wc <- sum(ng4[ind4]>0)
     
-    # set parameters
-    ind3<- match(wlast, names(ng3))
-    c_minus<- ng3[ind3]
+    # count n-1 (3)
+    ind<- grep(wPrev, ng3$name)
+    c_minus<- ng3df[ind,2] + 1
+    
+    # get count now
+    c_now<- sapply(wLast, function(w, wPrev)
+        {
+            str1<- paste0("^",wPrev," ",w, "$")
+            ind<- grep(str1, ng4$name)
+            if (length(ind)>0)
+                cc<- sum(ng4[ind,2])
+            else
+                cc<- 0
+            max((cc-0.75),0)  # return
+        }, wPrev)
+    
+    # get the set w:c(wi-1,w)>0
+    w<- sapply(wLast, function(w)
+    {
+        str1<- paste0(" ",w, "$")
+        sum(grep(str1, ng4$name))
+    })
+    
     
     # compute lambda
     d<- 0.75 # fixed discount
-    lambda<- d/c_minus*wc
+    lambda<- d/c_minus*w
     
     
+    # extract last three words
+    n<- 3
+    wPrev2<- paste(ws[(nWords-n+2):nWords], collapse=" ")
     
-    # calculate KN probability for each 4-gram
-    pkn<- sapply(ind4, function(i){computePKN(i,ng4,c_minus,lambda)})
+    # calculate KN probability for 3-gram
+    pkn_minus<- sapply(wLast, function(w, wPrev2)
+        {
+            str1<- paste0("^",wPrev2,w,"$")
+            wn<- sum(grep(str1, ng3$name)) + 1
+            str1<- paste0("^",wPrev2," ")
+            wd<- sum(grep(str1, ng3$name)) + 1
+            wn/wd
+        }, wPrev2)
     
-    
-    itmp<- which.max(pkn)
-    imax<- ind4[itmp]
+    pkn_now<- (cnow/cminus) + lambda*pkn_minus 
+        
+    imax<- which.max(pkn_now)
     
     # return
-    names(ng4[imax])
-    
-    
+    wLast[imax]
 }
 
 

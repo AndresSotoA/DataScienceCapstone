@@ -12,8 +12,6 @@ lines_twitter<- obtainLinesFast(fn_twitter)
 lines_news<- obtainLinesFast(fn_news)
 
 # ========== sample training datas ===============
-# set seed
-set.seed(2345)
 
 # compute number of lines to be sampled
 samplePct<- 1  # 6% sample rate
@@ -61,7 +59,6 @@ for (i in seq(96,nIter))
     save(ls_train,ng1,ng2,ng3,ng4, file= fname)
 }
 
-# ===== keep only most freq n-gram ======
 
 
 
