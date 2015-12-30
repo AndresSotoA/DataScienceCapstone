@@ -1,0 +1,42 @@
+# Knesey-Ney Formulation for 4-gram Model
+###
+###
+#### Author: Josh Lo
+#### Date: `r date()`
+
+
+## **Recursive Formula**:
+
+$$ P_{KN}(w_{i}|w_{i-n+1}^{i-1}) = \frac{max(C_{KN}(w_{i-n+1}^{i})-d,0)}{C_{KN}(w_{i-n+1}^{i-1})} + \frac{d}{C(w_{i-n+1}^{i-1})}C_p(w_{i-n+1}^{i-1})P_{KN}(w_i|w_{i-n+2}^{i-1}) $$
+
+<center> $C_{KN}= count$ --- for the highest order </center>
+
+<center> $C_{KN}= continuationcount$ --- for other lower orders </center>
+
+<center> $C_{p}= precedingcount$ </center>
+
+
+## **N = 4**:
+
+$$ P_{KN}(w_{4}|w_1^3) = \frac{max(C(w_1^4)-d,0)}{C(w_1^3)} + \frac{d}{C(w_1^3)}C_p(w_1^3)P_{KN}(w4|w_2^3) $$
+
+## **N = 3:**:
+
+$$ P_{KN}(w4|w_2^3) = \frac{max(C_{KN}(w_2^4)-d,0)}{C_{KN}(w_2^3)} + \frac{d}{C_{KN}(w_2^3)}C_p(w_2^3)P_{KN}(w4|w3) $$
+
+## **N = 2:**:
+
+$$ P_{KN}(w4|w3) = \frac{max(C_{KN}(w_3^4)-d,0)}{C_{KN}(w3)} + \frac{d}{C_{KN}(w3)}C_p(w3)P_{KN}(w4) $$
+
+## **N = 1:**:
+
+$$ P_{KN}(w4) = \frac{max(C_{KN}(w4)-d,0)}{|V|} $$
+
+
+
+
+
+
+
+
+
