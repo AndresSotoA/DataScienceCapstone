@@ -18,23 +18,36 @@ $$ P_{KN}(w_{i}|w_{i-n+1}^{i-1}) = \frac{max(C_{KN}(w_{i-n+1}^{i})-d,0)}{C_{KN}(
 
 ## **N = 4**:
 
-$$ P_{KN}(w_{4}|w_1^3) = \frac{max(C(w_1^4)-d,0)}{C(w_1^3)} + \frac{d}{C(w_1^3)}C_p(w_1^3)P_{KN}(w4|w_2^3) $$
+$$ P_{KN}(w_{4}|w_1^3) = \frac{max(C(w_1^3w_4)-d,0)}{C(w_1^3)} + \frac{d}{C(w_1^3)}C_p(w_1^3)P_{KN}(w4|w_2^3) $$
 
 ## **N = 3:**:
 
-$$ P_{KN}(w4|w_2^3) = \frac{max(C_{KN}(w_2^4)-d,0)}{C_{KN}(w_2^3)} + \frac{d}{C_{KN}(w_2^3)}C_p(w_2^3)P_{KN}(w4|w3) $$
+$$ P_{KN}(w_4|w_2^3) = \frac{max(C_{KN}(w_2^3w_4)-d,0)}{C_{KN}(w_2^3)} + \frac{d}{C_{KN}(w_2^3)}C_p(w_2^3)P_{KN}(w4|w3) $$
 
 ## **N = 2:**:
 
-$$ P_{KN}(w4|w3) = \frac{max(C_{KN}(w_3^4)-d,0)}{C_{KN}(w3)} + \frac{d}{C_{KN}(w3)}C_p(w3)P_{KN}(w4) $$
+$$ P_{KN}(w_4|w_3) = \frac{max(C_{KN}(w_3w_4)-d,0)}{C_{KN}(w_3)} + \frac{d}{C_{KN}(w_3)}C_p(w_3)P_{KN}(w_4) $$
 
 ## **N = 1:**:
 
-$$ P_{KN}(w4) = \frac{max(C_{KN}(w4)-d,0)}{|V|} $$
+$$ P_{KN}(w_4) = \frac{C_{KN}(w_3w_4)}{C_{KN}(w_3)} $$
 
 
 
+## **Items Needed**
 
+Item                  |        Description
+--------------------- | -----------------------------------------------------
+d                     |          0.75
+$c_{KN}(w_3)$         | size(appear) of 2-gram. 
+$c_{KN}(w_3w_4)$      | size(appear) of 2-gram ending with $w_4$
+$c_{p}(w_3)$          | size(appear) of 2-gram starting with $w_3$
+$c_{KN}(w_2^3)$       | size(appear) of 3-gram.
+$c_{KN}(w_2^3w_4)$    | size(appear) of 3-gram ending with $w_4$
+$c_{p}(w_2^3)$        | size(appear) of 3-gram starting with $w_2^3$
+$c_{KN}(w_1^3)$       | size(appear) of 4-gram.
+$c_{KN}(w_1^3w_4)$    | size(appear) of 4-gram ending with $w_4$
+$c_{p}(w_1^3)$        | size(appear) of 4-gram starting with $w_1^3$
 
 
 

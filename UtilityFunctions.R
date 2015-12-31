@@ -167,7 +167,7 @@ build4Words<- function(ws)
 prep_ngHigh<- function(ngdf, countThreshold=1)
 {
     # subsetting
-    df<- ngdf[ngdf$value> countThreshold, ]
+    df<- ngdf[ngdf$value>=countThreshold, ]
     
     # change name
     colnames(df)[2]<- "count"
@@ -175,6 +175,12 @@ prep_ngHigh<- function(ngdf, countThreshold=1)
     # tolower
     df$name<- tolower(df$name)
     
+    # ==== make it unique
+    df <- df %>% 
+        group_by(name) %>%
+        summarise(count= sum(count)) %>%
+        arrange(desc(count))
+   
     # --- split words
     aa<- strsplit(as.character(df$name[1]), split=" ")[[1]]
     nw<- length(aa)  # get number of grams (n-gram)
