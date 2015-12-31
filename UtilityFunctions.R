@@ -159,3 +159,32 @@ build4Words<- function(ws)
     # return
     paste(wsa,wsb,wsc,wsd)
 }
+
+# ======= data prep  ===========
+# convert into the format that can be accepted by glm_predict function
+# [w1 w2 w3 w4 count appear]
+# only take data with count >= countThreshold, default is 1 (take everything)
+prep_ngHigh<- function(ngdf, countThreshold=1)
+{
+    # subsetting
+    df<- ngdf[ngdf$value> countThreshold, ]
+    
+    # change name
+    colnames(df)[2]<- "count"
+    
+    # tolower
+    df$name<- tolower(df$name)
+    
+    # --- split words
+    aa<- strsplit(as.character(df$name[1]), split=" ")[[1]]
+    nw<- length(aa)  # get number of grams (n-gram)
+    # create words name vector w1- w4..
+    wvec<- sapply(1:nw, function(x) paste0("w",x)) 
+    # separate then mutate with appear 
+    df<- df %>%
+        separate(name, into= wvec) %>%
+        mutate(appear= 1)
+    
+    # return
+    df
+}

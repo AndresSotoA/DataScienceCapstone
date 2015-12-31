@@ -1,3 +1,7 @@
+library(dplyr)
+library(tidyr)
+source("UtilityFunctions.R")
+
 # =========== calculate pkn ========
 computePKN<- function(i, ng4, c_m, lamb)
 {
@@ -21,7 +25,7 @@ computePKN<- function(i, ng4, c_m, lamb)
 
 
 # =========== Predict KN 4 gram ==========
-predictKN <- function (ng1,ng2,ng3,ng4,sentence)
+predictKN <- function (df1,df2,df3,df4,sentence)
 {
     # get words from sentence
     s1<- tolower(sentence)
@@ -32,7 +36,7 @@ predictKN <- function (ng1,ng2,ng3,ng4,sentence)
     
     # extract last three words
     n<- 4
-    wPrev<- paste(ws[(nWords-n+2):nWords], collapse=" ")
+    wPrev<- ws[(nWords-n+2):nWords]
     
     # last word candidate
     wLast<- as.character(ng1$name[1:50])

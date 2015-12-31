@@ -32,7 +32,7 @@ ng3df<- data.frame()
 ng4df<- data.frame()
 
 
-for (i in c(1,50,95))#seq(1,nIter)) 
+for (i in c(25,75))#seq(1,nIter)) 
 {
     # file name
     fname<- sprintf('./sampledData/sampleData%d.RData',i)
