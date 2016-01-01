@@ -57,14 +57,32 @@ predictInterp <- function (df1,df2,df3,df4,sentence)
     # make NA words 0 count
     c3_w4[is.na(c3_w4$ckn),5]=0
     
+    # ====== Interpolate by four gram ======
+    # last word candidate
+    wLast<- data.frame(w4= df1$w1, flag=1)
+    # find matching count with last word candidates
+    dftmp<- df4 %>% 
+        filter(w1==wPrev[1],w2==wPrev[2],w3==wPrev[3]) %>%
+        select(-w1,-w2, -w3) %>%
+        mutate(ckn=count)
+    
+    # get total count
+    count4<- sum(dftmp$count)
+    
+    c4_w4<- merge(wLast,dftmp, by.x = "w4", all.x = TRUE, all.y= FALSE, sort=FALSE) 
+    # make NA words 0 count
+    c4_w4[is.na(c4_w4$ckn),5]=0
+    
     
     # ==== compute p-value
     V= nrow(df1)
     p1<- (df1$count+1)/(sum(df1$count)+V)
     p2<- (c2_w4$ckn+1)/(count2+V)
     p3<- (c3_w4$ckn+1)/(count3+V)
-     
-    pv<- (0.2*p1/(max(p1)+1e-20))+(0.6*p2/(max(p2)+1e-20)) +(0.2*p3/(max(p3)+1e-20))
+    p4<- (c4_w4$ckn+1)/(count4+V)
+    
+    pv<- (0.2*p1/(max(p1)+1e-20))+(0.3*p2/(max(p2)+1e-20)) 
+    +(0.3*p3/(max(p3)+1e-20)) +(0.2*p4/(max(p4)+1e-20))
     
     outdf<- data.frame(kw= c2_w4$w2, pkn= pv) %>%
         arrange(desc(pkn))
@@ -120,6 +138,9 @@ predictKN <- function (df1,df2,df3,df4,sentence)
     ckn2_w4<- merge(wLast,dftmp, by.x = "w2", all.x = TRUE, all.y= FALSE) 
     # make NA words 0 count
     ckn2_w4[is.na(ckn2_w4$ckn),3]=0
+
+    # get total count
+    count2<- sum(dftmp$count)
     
     # ======  N=3  ==========
     # last word candidate
@@ -130,6 +151,9 @@ predictKN <- function (df1,df2,df3,df4,sentence)
     ckn3_w4<- merge(wLast,dftmp, by.x = "w3", all.x = TRUE, all.y= FALSE) 
     # make NA words 0 count
     ckn3_w4[is.na(ckn3_w4$ckn),3]=0
+    
+    # get total count
+    count3<- sum(dftmp$count)
     
     # ======  N=4  ==========
     # last word candidate
@@ -179,9 +203,9 @@ predictKN <- function (df1,df2,df3,df4,sentence)
     
     #pkndf<- data.frame(kw= ckn2_w4$w2, pkn= pkn4) %>%
     #    arrange(desc(pkn))
-    
-    p2<- (c2_w4$ckn/count1gram)
-    p3<- (c3_w4$ckn/count2gram)
+    V= nrow(df1)
+    p2<- (c2_w4$ckn+1)/(count2+V)
+    p3<- (c3_w4$ckn+1)/(count3+V)
     pv<- (0.6*pkn4/(max(pkn4)+1e-10))+(0.3*p3/(max(p3)+1e-10)) +(0.1*p2/(max(p2)+1e-10))
     pkndf<- data.frame(kw= ckn2_w4$w2, pkn= pv) %>%
         arrange(desc(pkn))
