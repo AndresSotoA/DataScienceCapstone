@@ -81,8 +81,8 @@ predictInterp <- function (df1,df2,df3,df4,sentence)
     p3<- (c3_w4$ckn+1)/(count3+V)
     p4<- (c4_w4$ckn+1)/(count4+V)
     
-    pv<- (0.2*p1/(max(p1)+1e-20))+(0.3*p2/(max(p2)+1e-20)) 
-    +(0.3*p3/(max(p3)+1e-20)) +(0.2*p4/(max(p4)+1e-20))
+    pv<- (0.1*p1/(max(p1)+1e-20))+(0.1*p2/(max(p2)+1e-20)) 
+    +(0.1*p3/(max(p3)+1e-20)) +(0.7*p4/(max(p4)+1e-20))
     
     outdf<- data.frame(kw= c2_w4$w2, pkn= pv) %>%
         arrange(desc(pkn))

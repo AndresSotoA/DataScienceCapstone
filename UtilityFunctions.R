@@ -1,3 +1,5 @@
+library(dplyr)
+
 # read whole file buffer using readChar
 obtainBuffFast<- function(fname) 
 {
