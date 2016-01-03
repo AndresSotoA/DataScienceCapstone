@@ -103,19 +103,19 @@ addSentenceSymbol<- function(lines, n=1)
     pre<-""
     while ((ct)>0)
     {
-        pre<- paste(pre,"sstrt")
+        pre<- paste0(pre,"sstrt ")
         ct<- ct-1
     }
     
     
-    # remove punctuation first
-    lout<- lines
+    # remove last punctuation first
+    lout<- gsub("[[:punct:]]$","",lines)
     
     # add symbol at beginning and end
     if (n>1)
     {
         lout<- paste(pre,lout,"strmnt")
-        lout<- gsub("([.]{1}[[:space:]]+)([[:upper:]]{1})"
+        lout<- gsub("([.]{1}[[:space:]]+)([[:upper:]|[:digit:]]{1})"
                 ,paste(" strmnt",pre,"\\2")
                 ,lout)
     }
