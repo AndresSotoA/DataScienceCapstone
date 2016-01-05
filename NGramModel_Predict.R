@@ -174,12 +174,13 @@ predictKN <- function (df1,df2,df3,df4,sentence)
     # find matching count with last word candidates
     dftmp<- df2 %>% 
         filter(w1==wPrev[3]) %>%
-        select(-w1) %>%
+        group_by(w2) %>%
+        summarise(count= sum(count)) %>%
         mutate(ckn=count)
     
     c2_w4<- merge(wLast,dftmp, by.x = "w2", all.x = TRUE, all.y= FALSE) 
     # make NA words 0 count
-    c2_w4[is.na(c2_w4$ckn),5]=0
+    c2_w4[is.na(c2_w4$ckn),4]=0
     
     # ====== Interpolate by three gram ======
     # last word candidate
@@ -187,12 +188,13 @@ predictKN <- function (df1,df2,df3,df4,sentence)
     # find matching count with last word candidates
     dftmp<- df3 %>% 
         filter(w1==wPrev[2],w2==wPrev[3]) %>%
-        select(-w1,-w2) %>%
+        group_by(w3) %>%
+        summarize(count= sum(count)) %>%
         mutate(ckn=count)
     
     c3_w4<- merge(wLast,dftmp, by.x = "w3", all.x = TRUE, all.y= FALSE) 
     # make NA words 0 count
-    c3_w4[is.na(c3_w4$ckn),5]=0
+    c3_w4[is.na(c3_w4$ckn),4]=0
     
     
     # ===== Recursively combine =======
