@@ -15,8 +15,9 @@ lines_news<- obtainLinesFast(fn_news)
 # set seed
 set.seed(2345)
 
+
 # compute number of lines to be sampled
-samplePct<- 1  # 6% sample rate
+samplePct<- 6  # 6% sample rate
 nls_blogs<- samplePct/100* length(lines_blogs)
 nls_twitter<- samplePct/100* length(lines_twitter)
 nls_news<- samplePct/100*length(lines_news)
@@ -66,10 +67,13 @@ ltmp<- gsub("^[[:punct:]]","", ltmp)
 # 3. remove punctuations that is not in between words
 ltmp<- gsub("[[:punct:]]+[[:space:]]+"," ",ltmp)  # trailing punct
 ltmp<- gsub("[[:space:]]+[[:punct:]]+"," ",ltmp)
-# 4. remove front brackets
+# replace ’ to '
+ltmp<- gsub("’","'",ltmp)
+# 4. keep alphabets -, and ' 
 ltmp<- gsub("[^a-zA-Z\\-\\']"," ",ltmp)
 # 5. remove three dots
 ltmp<- gsub("[...]"," ",ltmp)
+
 
 # count ngram
 ng1<- textcnt(ltmp, method= "string", n= 1, split= "[[:space:][:digit:]]+",useBytes = TRUE)

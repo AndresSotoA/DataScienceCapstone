@@ -190,7 +190,7 @@ prep_ngHigh<- function(ngdf, countThreshold=1)
     wvec<- sapply(1:nw, function(x) paste0("w",x)) 
     # separate then mutate with appear 
     df<- df %>%
-        separate(name, into= wvec, extra= "merge", fill="right") %>%
+        separate(name, into= wvec, sep="[[:space:]]+", extra= "merge", fill="right") %>%
         mutate(appear= 1) 
 
                 
