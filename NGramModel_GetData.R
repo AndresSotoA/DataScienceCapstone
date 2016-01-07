@@ -104,6 +104,26 @@ save(df1,df2,df3,df4, file="ngramDF.RData")
 #     ws1, nws2, nws3, nws4,
 #     ng1,ng2,ng3,ng4, file="./sampledData/sampledData.RData")
 
+# ====== post proc =====
+df2a<- df2 %>% 
+    filter(w1 %in% df1$w1[1:5000]) %>%
+    filter(w2 %in% df1$w1[1:5000]) %>%
+    filter(count>2)
+df3a<- df3 %>% 
+    filter(w1 %in% df1$w1[1:5000]) %>%
+    filter(w2 %in% df1$w1[1:5000]) %>%
+    filter(w3 %in% df1$w1[1:5000]) %>%
+    filter(count>2)
+df4a<- df4 %>% 
+    filter(w1 %in% df1$w1[1:5000]) %>%
+    filter(w2 %in% df1$w1[1:5000]) %>%
+    filter(w3 %in% df1$w1[1:5000]) %>%
+    filter(w4 %in% df1$w1[1:5000]) %>%
+    filter(count>2)
+
+
+
+
 
 
 
