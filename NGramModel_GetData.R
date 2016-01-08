@@ -96,31 +96,30 @@ df3<- prep_ngHigh(ng3df)
 df4<- prep_ngHigh(ng4df)
 
 
+# ====== use common words only =====
+nCommonWords= 5000
+df1c<- df1[1:nCommonWords,]
+df2c<- df2 %>% 
+    filter(w1 %in% df1$w1[1:nCommonWords]) %>%
+    filter(w2 %in% df1$w1[1:nCommonWords]) %>%
+    filter(count>2)
+df3c<- df3 %>% 
+    filter(w1 %in% df1$w1[1:nCommonWords]) %>%
+    filter(w2 %in% df1$w1[1:nCommonWords]) %>%
+    filter(w3 %in% df1$w1[1:nCommonWords]) %>%
+    filter(count>2)
+df4c<- df4 %>% 
+    filter(w1 %in% df1$w1[1:nCommonWords]) %>%
+    filter(w2 %in% df1$w1[1:nCommonWords]) %>%
+    filter(w3 %in% df1$w1[1:nCommonWords]) %>%
+    filter(w4 %in% df1$w1[1:nCommonWords]) %>%
+    filter(count>2)
 
 # ======== save data to files ==========
+# save sampled data
 save(df1,df2,df3,df4, file="ngramDF.RData")
-
-#save(ls_train, ls_cvn, ls_test,
-#     ws1, nws2, nws3, nws4,
-#     ng1,ng2,ng3,ng4, file="./sampledData/sampledData.RData")
-
-# ====== post proc =====
-df2a<- df2 %>% 
-    filter(w1 %in% df1$w1[1:5000]) %>%
-    filter(w2 %in% df1$w1[1:5000]) %>%
-    filter(count>2)
-df3a<- df3 %>% 
-    filter(w1 %in% df1$w1[1:5000]) %>%
-    filter(w2 %in% df1$w1[1:5000]) %>%
-    filter(w3 %in% df1$w1[1:5000]) %>%
-    filter(count>2)
-df4a<- df4 %>% 
-    filter(w1 %in% df1$w1[1:5000]) %>%
-    filter(w2 %in% df1$w1[1:5000]) %>%
-    filter(w3 %in% df1$w1[1:5000]) %>%
-    filter(w4 %in% df1$w1[1:5000]) %>%
-    filter(count>2)
-
+# save data with common words only
+save(df1c,df2c,df3c,df4c, file="ngramCommonDF.RData")
 
 
 
