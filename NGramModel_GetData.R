@@ -121,6 +121,7 @@ save(df1,df2,df3,df4, file="ngramDF.RData")
 # save data with common words only
 save(df1c,df2c,df3c,df4c, file="ngramCommonDF.RData")
 
+save(df1,df1c,df2c,df3c,df4c, file="ngramCommonDF1.RData")
 
 
 
