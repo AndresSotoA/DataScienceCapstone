@@ -34,7 +34,9 @@ shinyUI(fluidPage(
     fluidRow(
         column(width=12,
                hr(),
-               verbatimTextOutput("nextWord")
+               selectInput("selectNextWord",multiple = TRUE,
+                           ,choice= "no prediction",
+                           label = "Next Word Prediction")
                )
     )
     
