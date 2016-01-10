@@ -17,14 +17,24 @@ shinyUI(fluidPage(
                br(),
                p("This shiny application predicts the current and next word
                  as the user types. The prediction method is based on N-Gram
-                 language model with Kneser-Ney smoothing algorithm.")
+                 language model with Kneser-Ney smoothing algorithm."),
+               hr()
                ) 
+       
     ),
     # fluidRow 2: input
     fluidRow(
-        column(width=4,
-               textInput("txtIn",label = "Please type in your sentences...",
-                         value="type here")
+        column(width=12,
+               h4("Please type in your sentences..."),
+               tags$textarea(id="textIn", rows=10, cols=140, "")
+               )
+    ),
+    
+    # output row
+    fluidRow(
+        column(width=12,
+               hr(),
+               verbatimTextOutput("nextWord")
                )
     )
     
