@@ -1,15 +1,17 @@
 library(shiny)
-load("ngramDF_pct.RData")
+load("ngramCommonDF.RData")
 source("NGramModel_Predict.R")
 
 
-shinyServer(function(input,output,session)
+shinyServer(function(input,output,clientData,session)
     {
+      observe({
         # predict next word
         sentence<- input$textIn
-        nw<- predictKN(df)
+        nwList<- predictKN(df1c,df2c,df3c,df4c,sentence)
         
-    updateSelectInput(session,"selectNextWord",
-                          choices = c("try","this"),
+        updateSelectInput(session,"selectNextWord",
+                          choices = nwList,
                           selected= 1)
+      })
 })

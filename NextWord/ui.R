@@ -34,9 +34,11 @@ shinyUI(fluidPage(
     fluidRow(
         column(width=12,
                hr(),
-               selectInput("selectNextWord",multiple = TRUE,
+               selectInput("selectNextWord",size = 8,
+                           selectize = FALSE,
                            ,choice= "no prediction",
-                           label = "Next Word Prediction")
+                           label = "Next Word Prediction",
+                           )
                )
     )
     
