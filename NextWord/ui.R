@@ -36,8 +36,8 @@ shinyUI(fluidPage(
                hr(),
                selectInput("selectNextWord",size = 8,
                            selectize = FALSE,
-                           ,choice= "no prediction",
-                           label = "Next Word Prediction",
+                           choice= "no prediction",
+                           label = "Next Word Prediction"
                            )
                )
     )

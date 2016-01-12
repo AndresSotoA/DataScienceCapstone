@@ -95,11 +95,14 @@ predictInterp <- function (df1,df2,df3,df4,sentence)
 # =========== Predict KN 4 gram ==========
 predictKN <- function (df1,df2,df3,df4,sentence)
 {
+    # if sentence is null, return null
+    if (nchar(sentence)==0)
+        return("")
+    
     # get words from sentence
     s1<- tolower(sentence)
     #s1<- addSentenceSymbol(s1,n=2)
-    ws<- strsplit(s1, split=" ", useBytes = TRUE)[[1]]
-    
+    ws<- strsplit(s1, split="[[:space:]]", useBytes = TRUE)[[1]]
     nWords<- length(ws)
     
     # extract last three words
@@ -213,12 +216,22 @@ predictKN <- function (df1,df2,df3,df4,sentence)
         arrange(desc(pkn))
     
     # return
-    as.character(pkndf$kw[1:8])
+    # if bad prediction, return null
+    if ((sum(c2_w4$ckn)==0) && (sum(c3_w4$ckn)==0) && (sum(pkn4)==0))
+    {
+        return("")
+    }
+    else
+        as.character(pkndf$kw[1:8])
 }
 
 # ========= single word prediction =========
 predictOne<- function (df1, sentence)
 {
+    # if sentence is null, return null
+    if (nchar(sentence)==0)
+        return("")
+    
     # get words from sentence
     s1<- tolower(sentence)
     #s1<- addSentenceSymbol(s1,n=2)
