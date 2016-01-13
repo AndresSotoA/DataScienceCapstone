@@ -1,5 +1,21 @@
 library(shiny)
 
+# javascript codes to get keyboard input
+jscode <- "
+$(function(){ 
+  $(document).keyup(function(e) {
+    if (e.which >=49 && e.which<=57) {
+      Shiny.onInputChange('numPress', e.which-48);
+    }
+    else
+    {
+      Shiny.onInputChange('numPress', 0);
+    }
+  });
+})
+"
+
+
 # Shiny UI
 
 shinyUI(fluidPage(
@@ -26,7 +42,8 @@ shinyUI(fluidPage(
     fluidRow(
         column(width=12,
                h4("Please type in your sentences..."),
-               tags$textarea(id="textIn", rows=10, cols=140, "")
+               tags$textarea(id="textIn", rows=10, cols=140, ""),
+               tags$script(HTML(jscode))
                )
     ),
     
@@ -40,7 +57,15 @@ shinyUI(fluidPage(
                            label = "Next Word Prediction"
                            )
                )
+    ),
+    
+    # test use
+    fluidRow(
+        column(width=12,
+               textInput("testTxt","test output","test")
+               )
     )
+    
     
 )
 

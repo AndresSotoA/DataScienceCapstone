@@ -22,14 +22,42 @@ shinyServer(function(input,output,clientData,session)
         }
         
         # handle zero prediction
-        if (nwList[1]=="")
+        if (length(nwList)==0)
         {
-            nwList<-c("No prediction"," ")
+            nwListOut<-c("No prediction")
         }
-       
+        else
+        {
+            # attach index numbers
+            nwListOut<- paste(1:length(nwList),"  ",nwList)
+        }
         
+        # keyboard input
+        if (length(input$numPress)>0)
+        {
+            if (input$numPress>0) # number key is pressed
+            {
+                iWord<- input$numPress
+                nextWord<- nwList[iWord]
+                if (lastChar==" ") # next word prediction mode
+                {
+                    fullstr<- paste0(sentence,nextWord)
+                }
+                else # autocomplete mode
+                {
+                    fullstr<- sentence
+                }
+                updateTextInput(session,"textIn", value = fullstr)
+                
+            }
+            # update key pressed indicator
+            updateTextInput(session,"testTxt",value = sprintf('%.0f',input$numPress))
+            
+        }
+        
+        # print out next words on selectInput
         updateSelectInput(session,"selectNextWord",
-                          choices = nwList,
-                          selected= 1)
+                          choices = nwListOut,
+                          selected= 3)
       })
 })

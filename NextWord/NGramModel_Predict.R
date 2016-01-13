@@ -219,7 +219,7 @@ predictKN <- function (df1,df2,df3,df4,sentence)
     # if bad prediction, return null
     if ((sum(c2_w4$ckn)==0) && (sum(c3_w4$ckn)==0) && (sum(pkn4)==0))
     {
-        return("")
+        return(character())
     }
     else
         as.character(pkndf$kw[1:8])
@@ -230,7 +230,7 @@ predictOne<- function (df1, sentence)
 {
     # if sentence is null, return null
     if (nchar(sentence)==0)
-        return("")
+        return(character())
     
     # get words from sentence
     s1<- tolower(sentence)
@@ -242,13 +242,18 @@ predictOne<- function (df1, sentence)
     matchString<- paste0("^",lastWord)
     ind<- grep(matchString, df1$w1)
     
-    dftmp<- df1[ind,] %>%
-        filter(w1!=lastWord)
-    
-    if (nrow(dftmp)>=6)
-        dftmp$w1[1:6]
+    if (length(ind)==0)  # bad prediction, return null
+        return(character())
     else
-        dftmp$w1
+    {
+        dftmp<- df1[ind,] %>%
+            filter(w1!=lastWord)
+        
+        if (nrow(dftmp)>=6)
+            dftmp$w1[1:6]
+        else
+            dftmp$w1
+    }
 }
 
 
