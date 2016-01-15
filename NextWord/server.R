@@ -36,7 +36,7 @@ shinyServer(function(input,output,clientData,session)
         # keyboard input
         if (length(input$numPress)>0)
         {
-            if ((input$numPress>0) && (lock==0)) # number key is pressed
+            if ((input$numPress<0)) # number key is pressed
             {
                 iWord<- input$numPress
                 nextWord<- nwList[iWord]
@@ -57,11 +57,7 @@ shinyServer(function(input,output,clientData,session)
                 lock<- 1
                 print(lock)
             }
-            else if (input$numPress== 32)
-            {
-                lock<- 0
-                print("lock reset")
-            }
+            
                 
             # update key pressed indicator
             updateTextInput(session,"testTxt",value = sprintf('%.0f',input$numPress))

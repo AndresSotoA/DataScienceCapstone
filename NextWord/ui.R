@@ -1,6 +1,18 @@
 library(shiny)
 
 # javascript codes to get keyboard input
+jscode_focus <- "
+$(function(){ 
+    $(document).keydown(function(e) {
+        if (e.which ==32) {
+            Shiny.onInputChagne('numPress',32);
+            //$(document).getElementById('textIn').focus();
+        }     
+  });
+})
+"
+
+
 jscode_up <- "
 $(function(){ 
   $(document).keyup(function(e) {
@@ -65,8 +77,7 @@ shinyUI(fluidPage(
                            choice= "no prediction",
                            label = "Next Word Prediction"
                            ),
-               tags$script(HTML(jscode_down)),
-               tags$script(HTML(jscode_up))
+               tags$script(HTML(jscode_focus))
                )
     ),
     
