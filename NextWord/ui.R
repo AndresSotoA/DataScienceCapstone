@@ -1,25 +1,29 @@
 library(shiny)
 
 # javascript codes to get keyboard input
-jscode_focus <- "
+jscode_spacePress <- "
 $(function(){ 
-    $(document).keydown(function(e) {
+    $('#selectNextWord').keyup(function(e) {
         if (e.which ==32) {
-            Shiny.onInputChagne('numPress',32);
-            //$(document).getElementById('textIn').focus();
-        }     
-  });
+            Shiny.onInputChange('numPress',-32);
+            document.getElementById('textIn').focus();
+        } 
+     });
+
+    $('#selectNextWord').keydown(function(e) {
+        if (e.which ==32) {
+            Shiny.onInputChange('numPress',32);
+        }
+    });
 })
 "
 
 
-jscode_up <- "
+jscode_keyPress <- "
 $(function(){ 
-  $(document).keyup(function(e) {
-    if (e.which ==32) {
-        Shiny.onInputChange('numPress', 32);
-    } 
-  });
+    $('#textIn').keyup(function(e) {
+           Shiny.onInputChange('keyPress',e.which);
+     });
 })
 "
 
@@ -64,7 +68,8 @@ shinyUI(fluidPage(
     fluidRow(
         column(width=12,
                h4("Please type in your sentences..."),
-               tags$textarea(id="textIn", rows=10, cols=140, "")
+               tags$textarea(id="textIn", rows=10, cols=140, ""),
+               tags$script(HTML(jscode_keyPress))
                )
     ),
     
@@ -77,7 +82,7 @@ shinyUI(fluidPage(
                            choice= "no prediction",
                            label = "Next Word Prediction"
                            ),
-               tags$script(HTML(jscode_focus))
+               tags$script(HTML(jscode_spacePress))
                )
     ),
     
