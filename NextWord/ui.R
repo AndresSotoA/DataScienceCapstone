@@ -7,7 +7,8 @@ $(function(){
         if (e.which ==32) {
             Shiny.onInputChange('numPress',-32);
             document.getElementById('textIn').focus();
-        } 
+        }
+        Shiny.onInputChange('keyPress',-32);
      });
 
     $('#selectNextWord').keydown(function(e) {
@@ -22,7 +23,10 @@ $(function(){
 jscode_keyPress <- "
 $(function(){ 
     $('#textIn').keyup(function(e) {
+        if ($('#textIn').is(':focus'))
            Shiny.onInputChange('keyPress',e.which);
+        else 
+           Shiny.onInputChange('keyPress',-1);
      });
 })
 "

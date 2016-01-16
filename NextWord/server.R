@@ -34,9 +34,11 @@ shinyServer(function(input,output,clientData,session)
         #print(input$inputFocus)
         if (length(input$keyPress)>0)
         {
-            # print out next words on selectInput
-            updateSelectInput(session,"selectNextWord",
-                              choices = nwListOut)
+            print(sprintf("keypress=%d",input$keyPress))
+            if (input$keyPress>0)
+                # print out next words on selectInput
+                updateSelectInput(session,"selectNextWord",
+                                  choices = nwListOut)
         }
         
         # keyboard input
@@ -46,17 +48,17 @@ shinyServer(function(input,output,clientData,session)
             selectedItem<- input$selectNextWord
             
             # detect the unlock event: spacebar transition from down to up
-            print(input$numPress)
+            print(sprintf("numPress= %d",input$numPress))
             if ((input$numPress==32))
                 lock<<-0
-            print(lock)
+            print(sprintf("lock=%d",lock))
             if ((lock==0) && (input$numPress==-32))
             {
                 iWord<- (nwListOut==selectedItem)
                 nextWord<- nwList[iWord]
                 if (lastChar==" ") # next word prediction mode
                 {
-                    fullstr<- paste0(sentence,nextWord," ")
+                    fullstr<- paste0(sentence,nextWord)
                 }
                 else # autocomplete mode
                 {
@@ -68,6 +70,9 @@ shinyServer(function(input,output,clientData,session)
                     #print(fullstr)
                 }
                 updateTextInput(session,"textIn", value = fullstr)
+                # reset words on selectInput
+                updateSelectInput(session,"selectNextWord",
+                                  choices = c("No prediction"))
                 lock<<- 1
             }
             
