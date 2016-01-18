@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Next Word Prediction Tool</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Next Word Prediction Tool">
+  <meta name="author" content="JiaHsuan Lo">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Next Word Prediction Tool</h1>
+    <h2>A R Shiny application that predicts the next word</h2>
+    <p>JiaHsuan Lo<br/>Coursera Data Science Student</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Introduction</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Automatic word completion and next word prediciton are common features in the user input devices that can help users input texts easier, faster, and more accurately. </p>
+
+<p>This application is designed to provide a convenient and efficient typing tool to user. The underlying algorithm was based on N-gram language model and Kneser-Ney smoothing algorithm. Some backgrouhd information can be found at the following links:</p>
+
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Natural_language_processing">Natrual Language Processing Wikipedia</a></li>
+<li><a href="https://lagunita.stanford.edu/c4x/Engineering/CS-224N/asset/slp4.pdf">N-Gram: Speech and Language Processing Course Material by Daniel Jurafsky &amp; James H. Martin at Stanford University</a></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Data used to Build the Language Model</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>The data is from a corpus called HC Corpora <a href="www.corpora.heliohost.org">www.corpora.heliohost.org</a>, and the data files are obtained from the <a href="https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip">Coursera website</a>.</p></li>
+<li><p>The sources of texts include blogs, twitter, and news. Only US english files were used. The lines and words counts are summarized in the following table:</p></li>
+</ul>
+
+<table><thead>
+<tr>
+<th>File Name</th>
+<th>Number of Lines</th>
+<th>Number of Words</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>en_US.blogs.txt</td>
+<td>899288</td>
+<td>38315977</td>
+</tr>
+<tr>
+<td>en_US.twitter.txt</td>
+<td>167155</td>
+<td>2191565</td>
+</tr>
+<tr>
+<td>en_US.news.txt</td>
+<td>1010242</td>
+<td>35627434</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li>To make the app small and fast for general PC and mobile device, following sampling steps were used when building the model:
+
+<ul>
+<li><font size="4">6% of the texts from each files were strafified-randomly sampled. Then 1- to 4-gram frequency table were created.</font> </li>
+<li><font size="4">From 1-gram data, 5000 most common words were identified based on the frequency.</font></li>
+<li><font size="4">Only those n-gram data (n=1...4) that contains the 5000 most common words were preserved.</font></li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Algorithm Behind the Scene</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Kneser-Ney recursive smoothing algorithm was used:</li>
+</ul>
+
+<p><font size="5">
+\[ P_{KN}(w_{i}|w_{i-n+1}^{i-1}) = \frac{max(C_{KN}(w_{i-n+1}^{i})-d,0)}{C_{KN}(w_{i-n+1}^{i-1})} + \frac{d}{C(w_{i-n+1}^{i-1})}C_p(w_{i-n+1}^{i-1})P_{KN}(w_i|w_{i-n+2}^{i-1}) \]
+</font></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Application Tutorial</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>Where to Play With the App?</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Introduction'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Data used to Build the Language Model'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Algorithm Behind the Scene'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Application Tutorial'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Where to Play With the App?'>
+         5
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
