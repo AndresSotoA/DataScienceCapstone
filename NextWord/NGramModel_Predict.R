@@ -102,7 +102,7 @@ predictKN <- function (df1,df2,df3,df4,sentence)
     # get words from sentence
     s1<- tolower(sentence)
     #s1<- addSentenceSymbol(s1,n=2)
-    ws<- strsplit(s1, split="[[:space:]]", useBytes = TRUE)[[1]]
+    ws<- strsplit(trimws(s1), split="[[:space:]]", useBytes = TRUE)[[1]]
     nWords<- length(ws)
     
     # extract last three words

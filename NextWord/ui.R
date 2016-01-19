@@ -31,72 +31,66 @@ $(function(){
 })
 "
 
-jscode_down <- "
-$(function(){ 
-  $(document).keydown(function(e) {
-    if (e.which >=49 && e.which<=57) {
-      Shiny.onInputChange('numPress', e.which-48);
-    }
-    else
-    {
-      Shiny.onInputChange('numPress', 0);
-    }
-  });
-})
-"
-
-
 # Shiny UI
 
 shinyUI(fluidPage(
     # application title
     titlePanel(
-        h1("Next Word Prediction", align= "center")
+        h1(strong("Next Word Prediction"), align= "center"
+           , style="background-color: #00f; padding: 30px; color: #fff")
         ),
     
     # fluidRow 1: overview
     fluidRow(
         column(width= 12,
-               h2("Next word prediction SHINY application"),
-               br(),
-               p("Author: JiaHsuan Lo"),
-               br(),
-               p("This shiny application predicts the current and next word
-                 as the user types. The prediction method is based on N-Gram
-                 language model with Kneser-Ney smoothing algorithm."),
+               h2(strong("Next word prediction SHINY application"),align="center",
+                  style=""),
+               h3("Author: JiaHsuan Lo", align="center"),
                hr()
                ) 
        
     ),
-    # fluidRow 2: input
     fluidRow(
         column(width=12,
-               h4("Please type in your sentences..."),
+               p(HTML("<font size=5> This shiny application predicts the current and next word
+                 as the user types. The prediction method is based on N-Gram
+                 language model with Kneser-Ney smoothing algorithm.</font>"))
+        )
+    ),
+    
+    # fluidRow 2
+    fluidRow(
+        # input text area
+        column(width=12,
+               h4(strong("Please type in your sentences...")),
                tags$textarea(id="textIn", rows=10, cols=140, ""),
                tags$script(HTML(jscode_keyPress))
                )
     ),
-    
-    # output row
     fluidRow(
-        column(width=12,
-               hr(),
+        # output 
+        column(width=4,
                selectInput("selectNextWord",size = 8,
                            selectize = FALSE,
                            choice= "no prediction",
-                           label = "Next Word Prediction"
-                           ),
+                           label="Next Word Prediction"
+               ),
                tags$script(HTML(jscode_spacePress))
-               )
-    ),
-    
-    # test use
-    fluidRow(
-        column(width=12,
-               textInput("testTxt","test output","test")
-               )
+        ),
+        column(width=4,
+               h4(strong("Press [TAB] key to go to the next word prediction listbox"),
+                  style="color: #11f; padding-left:40 px",
+                  align="center"),
+               h4(img(src="downArrow.jpg", width="100 px"), align="center")
+        ),
+        column(width=4,
+               h4(img(src="upArrow.jpg", width="100 px"), align="center"),
+               h4(strong("[UP], [DOWN] or [NUMBER] keys to select the word. 
+                         Press [SPACEBAR] key to return to text area"),
+                  style="color: #11f; padding-left:40 px",
+                  align="center")
+        )
     )
-    
     
 )
 
