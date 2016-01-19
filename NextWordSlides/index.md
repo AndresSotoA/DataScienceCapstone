@@ -43,11 +43,15 @@ en_US.news.txt    |  1010242 	               |    35627434
 
 ## Algorithm Behind the Scene
 
-* Kneser-Ney recursive smoothing algorithm was used:
+* Automatic word completion:
+    + 1-gram model was used to predict more probable word.
+    
+* Next word prediction: A mixed smoothing algorithm was used:
+    + Kneser-Ney Recursive formula was applied to 1- to 4-gram language models to calculate the probabilities of the next word candidates.
+    + 2- and 3-gram models were also used to estimate the probabilities of the next word candidates.
+    + An interpolation scheme was used to calculate the final probablities.
+    + The most probable word was then predicted.
 
-<font size="5">
-$$ P_{KN}(w_{i}|w_{i-n+1}^{i-1}) = \frac{max(C_{KN}(w_{i-n+1}^{i})-d,0)}{C_{KN}(w_{i-n+1}^{i-1})} + \frac{d}{C(w_{i-n+1}^{i-1})}C_p(w_{i-n+1}^{i-1})P_{KN}(w_i|w_{i-n+2}^{i-1}) $$
-</font>
 
 
 
