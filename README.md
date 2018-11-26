@@ -1,7 +1,4 @@
-# Coursera-SwiftKey Milestone Report
-####
-####
-#### Author: JiaHsuan Lo
+# Coursera-SwiftKey Capstone Project
 
 ## Introduction
 
