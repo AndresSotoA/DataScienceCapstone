@@ -2,7 +2,6 @@
 ####
 ####
 #### Author: JiaHsuan Lo
-#### Date: `r date()`
 
 ## Introduction
 
